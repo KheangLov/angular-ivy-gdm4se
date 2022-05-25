@@ -3,7 +3,11 @@
     <div>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Search</mat-label>
-        <input matInput placeholder="Ex: Angular courses" />
+        <input
+          matInput
+          placeholder="Ex: Angular courses"
+          (keyup)="searchBookByTitle($event)"
+        />
       </mat-form-field>
     </div>
     <div>

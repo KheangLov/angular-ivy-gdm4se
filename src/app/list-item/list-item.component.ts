@@ -14,13 +14,16 @@ import { IBook } from '../type-interface';
 export class ListItemComponent implements OnInit {
   bookData: IBook;
   bookList: Array<IBook> = [];
+  tempBookList: Array<IBook> = [];
   constructor(private bookService: BookService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.bookService
       .getBooks()
+      .pipe(filter((book) => book !== undefined && book !== null))
       .subscribe(
-        (books) => (this.bookList = books.filter((book) => book.is_active))
+        (books) =>
+          (this.bookList = books.filter((book) => book && book.is_active))
       );
   }
 
@@ -30,7 +33,24 @@ export class ListItemComponent implements OnInit {
     });
     dialogRef
       .afterClosed()
-      .subscribe(({ data }) => data && this.bookList.push(data));
+      .subscribe(
+        ({ data }) => data && data.is_active && this.bookList.push(data)
+      );
+  }
+
+  searchBookByTitle(event: any) {
+    const title = event.target.value;
+    if (!this.tempBookList.length) {
+      this.tempBookList = this.bookList;
+    }
+    if (title) {
+      this.bookList = this.bookList.filter((book) =>
+        book.title.includes(event.target.value)
+      );
+    } else {
+      this.bookList = this.tempBookList;
+      this.tempBookList = [];
+    }
   }
 
   handleBookDelete(book: IBook) {
