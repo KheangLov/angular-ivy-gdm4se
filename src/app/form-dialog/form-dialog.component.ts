@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Optional } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ICategory, IStatus, IBookForm } from '../type-interface';
+import { ICategory, IStatus, IBook, IBookForm } from '../type-interface';
 import { BookService } from '../book.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { BookService } from '../book.service';
   styleUrls: ['./form-dialog.component.css'],
 })
 export class FormDialogComponent {
+  localData: IBook;
   initialBookData: IBookForm = {
     title: null,
     category: null,
@@ -23,11 +25,19 @@ export class FormDialogComponent {
     { value: 0, viewValue: 'Inactive' },
     { value: 1, viewValue: 'Active' },
   ];
-  constructor(private bookService: BookService) {}
+  constructor(
+    public dialogRef: MatDialogRef<FormDialogComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: IBook,
+    private bookService: BookService
+  ) {
+    this.localData = { ...data };
+  }
 
   handleFormSubmit() {
     this.bookService
       .createBook(this.initialBookData)
-      .subscribe((book) => console.log(book));
+      .subscribe((book) =>
+        this.dialogRef.close({ event: 'Cancel', data: book })
+      );
   }
 }
