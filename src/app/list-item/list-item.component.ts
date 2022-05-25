@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BookService } from '../book.service';
+import { IBook } from '../type-interface';
 
 @Component({
   selector: 'app-list-item',
@@ -6,8 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit {
-  @Input() items: Array<Object>;
-  constructor() {}
+  listBooks: Array<IBook> = [];
 
-  ngOnInit() {}
+  constructor(private bookService: BookService) {}
+
+  ngOnInit() {
+    this.bookService.getBooks().subscribe((books) => (this.listBooks = books));
+  }
+
+  parseDataToJSON(data) {
+    return JSON.stringify(data);
+  }
 }

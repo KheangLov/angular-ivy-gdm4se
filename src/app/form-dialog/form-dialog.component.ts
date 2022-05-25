@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ICategory, IStatus } from '../type-interface';
+import { ICategory, IStatus, IBook } from '../type-interface';
 
 @Component({
   selector: 'app-form-dialog',
@@ -8,6 +8,11 @@ import { ICategory, IStatus } from '../type-interface';
   styleUrls: ['./form-dialog.component.css'],
 })
 export class FormDialogComponent {
+  initialBookData: IBook = {
+    title: null,
+    category: null,
+    is_active: null,
+  };
   categories: Array<ICategory> = [
     { value: 'Technology', viewValue: 'Technology' },
     { value: 'Cartoon', viewValue: 'Cartoon' },

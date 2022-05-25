@@ -10,7 +10,9 @@ const initialHttpOption = {
   }),
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BookService {
   books: Array<IBook> = [];
   constructor(private http: HttpClient) {}
@@ -18,6 +20,14 @@ export class BookService {
   getBooks(): Observable<IBook> {
     return this.http.get<IBook>(
       'https://628da730368687f3e706c47f.mockapi.io/api/angular-mat/books'
+    );
+  }
+
+  createBook(book: IBook): Observable<IBook> {
+    return this.http.post<IBook>(
+      'https://628da730368687f3e706c47f.mockapi.io/api/angular-mat/books',
+      book,
+      initialHttpOption
     );
   }
 }
