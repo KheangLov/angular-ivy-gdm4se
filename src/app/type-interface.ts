@@ -10,9 +10,9 @@ export interface IStatus {
 
 export interface IBook {
   id: any;
-  title: string;
-  category: string;
-  is_active: boolean;
+  title: any;
+  category: any;
+  is_active: any;
   createdAt: any;
 }
 

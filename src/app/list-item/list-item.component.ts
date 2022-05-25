@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { IBook } from '../type-interface';
 
