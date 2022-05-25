@@ -1,7 +1,7 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ICategory, IStatus, IBook, IBookForm } from '../type-interface';
+import { ICategory, IStatus, IBook } from '../type-interface';
 import { BookService } from '../book.service';
 
 @Component({
@@ -40,12 +40,22 @@ export class FormDialogComponent {
     if (this.action === 'edit') {
       this.bookService
         .updateBook(this.initialBookData)
-        .subscribe((book) => this.dialogRef.close({ event: 'Cancel' }));
+        .subscribe((book) =>
+          this.dialogRef.close({
+            event: 'Cancel',
+            data: book,
+            action: this.action,
+          })
+        );
     } else {
       this.bookService
         .createBook(this.initialBookData)
         .subscribe((book) =>
-          this.dialogRef.close({ event: 'Cancel', data: book })
+          this.dialogRef.close({
+            event: 'Cancel',
+            data: book,
+            action: this.action,
+          })
         );
     }
   }

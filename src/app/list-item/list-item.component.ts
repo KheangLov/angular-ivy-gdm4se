@@ -31,11 +31,15 @@ export class ListItemComponent implements OnInit {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data,
     });
-    dialogRef
-      .afterClosed()
-      .subscribe(
-        ({ data }) => data && data.is_active && this.bookList.push(data)
-      );
+    dialogRef.afterClosed().subscribe(({ data, action }) => {
+      if (action === 'create') {
+        data && data.is_active && this.bookList.push(data);
+      } else {
+        if (data && data.is_active < 1) {
+          this.bookList = this.bookList.filter((book) => book.id !== data.id);
+        }
+      }
+    });
   }
 
   searchBookByTitle(event: any) {
@@ -47,6 +51,11 @@ export class ListItemComponent implements OnInit {
       this.bookList = this.bookList.filter((book) =>
         book.title.includes(event.target.value)
       );
+      if (!this.bookList.length) {
+        this.bookList = this.tempBookList.filter((book) =>
+          book.title.includes(event.target.value)
+        );
+      }
     } else {
       this.bookList = this.tempBookList;
       this.tempBookList = [];
