@@ -7,6 +7,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -21,6 +22,7 @@ import { HelloComponent } from './hello.component';
     MatGridListModule,
     MatFormFieldModule,
     MatRadioModule,
+    BrowserAnimationsModule,
   ],
   declarations: [AppComponent, HelloComponent],
   bootstrap: [AppComponent],
