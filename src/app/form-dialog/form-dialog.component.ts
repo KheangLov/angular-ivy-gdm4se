@@ -40,9 +40,7 @@ export class FormDialogComponent {
     if (this.action === 'edit') {
       this.bookService
         .updateBook(this.initialBookData)
-        .subscribe((book) =>
-          this.dialogRef.close({ event: 'Cancel', data: book })
-        );
+        .subscribe((book) => this.dialogRef.close({ event: 'Cancel' }));
     } else {
       this.bookService
         .createBook(this.initialBookData)

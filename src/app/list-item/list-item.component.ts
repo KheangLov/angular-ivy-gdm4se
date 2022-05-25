@@ -28,7 +28,9 @@ export class ListItemComponent implements OnInit {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data,
     });
-    dialogRef.afterClosed().subscribe(({ data }) => this.bookList.push(data));
+    dialogRef
+      .afterClosed()
+      .subscribe(({ data }) => data && this.bookList.push(data));
   }
 
   handleBookDelete(book: IBook) {
