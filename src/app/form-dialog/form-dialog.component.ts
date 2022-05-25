@@ -10,8 +10,8 @@ import { BookService } from '../book.service';
   styleUrls: ['./form-dialog.component.css'],
 })
 export class FormDialogComponent {
-  localData: IBook;
-  initialBookData: IBookForm = {
+  action: string = 'create';
+  initialBookData: IBook = {
     title: null,
     category: null,
     is_active: null,
@@ -30,14 +30,25 @@ export class FormDialogComponent {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: IBook,
     private bookService: BookService
   ) {
-    this.localData = { ...data };
+    this.initialBookData = data;
+    if (data && data.id) {
+      this.action = 'edit';
+    }
   }
 
   handleFormSubmit() {
-    this.bookService
-      .createBook(this.initialBookData)
-      .subscribe((book) =>
-        this.dialogRef.close({ event: 'Cancel', data: book })
-      );
+    if (this.action === 'edit') {
+      this.bookService
+        .updateBook(this.initialBookData)
+        .subscribe((book) =>
+          this.dialogRef.close({ event: 'Cancel', data: book })
+        );
+    } else {
+      this.bookService
+        .createBook(this.initialBookData)
+        .subscribe((book) =>
+          this.dialogRef.close({ event: 'Cancel', data: book })
+        );
+    }
   }
 }

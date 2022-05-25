@@ -11,17 +11,26 @@ import { IBook } from '../type-interface';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit {
-  listBooks: Array<IBook> = [];
+  bookList: Array<IBook> = [];
   constructor(private bookService: BookService, public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.bookService.getBooks().subscribe((books) => (this.listBooks = books));
+    this.bookService.getBooks().subscribe((books) => (this.bookList = books));
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(FormDialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+  openDialog(data = {}) {
+    const dialogRef = this.dialog.open(FormDialogComponent, {
+      data,
     });
+    dialogRef.afterClosed().subscribe(({ data }) => this.bookList.push(data));
+  }
+
+  handleBookDelete(book: IBook) {
+    this.bookService
+      .deleteBook(book)
+      .subscribe(
+        (book) =>
+          (this.bookList = this.bookList.filter((data) => data.id !== book.id))
+      );
   }
 }

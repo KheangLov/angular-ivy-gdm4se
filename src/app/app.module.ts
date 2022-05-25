@@ -10,6 +10,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -31,6 +32,7 @@ import { HelloComponent } from './hello.component';
     MatDialogModule,
     MatButtonModule,
     MatListModule,
+    MatIconModule,
     BrowserAnimationsModule,
     HttpClientModule,
   ],
