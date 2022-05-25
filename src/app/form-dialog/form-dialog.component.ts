@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ICategory, IStatus, IBook } from '../type-interface';
+import { ICategory, IStatus, IBookForm } from '../type-interface';
 
 @Component({
   selector: 'app-form-dialog',
@@ -8,7 +8,7 @@ import { ICategory, IStatus, IBook } from '../type-interface';
   styleUrls: ['./form-dialog.component.css'],
 })
 export class FormDialogComponent {
-  initialBookData: IBook = {
+  initialBookData: IBookForm = {
     title: null,
     category: null,
     is_active: null,

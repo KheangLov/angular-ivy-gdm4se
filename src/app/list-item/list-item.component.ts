@@ -15,8 +15,4 @@ export class ListItemComponent implements OnInit {
   ngOnInit() {
     this.bookService.getBooks().subscribe((books) => (this.listBooks = books));
   }
-
-  parseDataToJSON(data) {
-    return JSON.stringify(data);
-  }
 }
