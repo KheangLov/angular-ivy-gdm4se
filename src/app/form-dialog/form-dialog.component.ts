@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ICategory, IStatus, IBookForm } from '../type-interface';
+import { BookService } from '../book.service';
 
 @Component({
   selector: 'app-form-dialog',
@@ -22,5 +23,11 @@ export class FormDialogComponent {
     { value: 0, viewValue: 'Inactive' },
     { value: 1, viewValue: 'Active' },
   ];
-  constructor() {}
+  constructor(private bookService: BookService) {}
+
+  handleFormSubmit() {
+    this.bookService
+      .createBook(this.initialBookData)
+      .subscribe((book) => console.log(book));
+  }
 }

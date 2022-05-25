@@ -1,12 +1,17 @@
 <div mat-dialog-content>
-  <form>
+  <form (submit)="handleFormSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
-      <input matInput placeholder="Angular Tutorial" />
+      <input
+        matInput
+        placeholder="Angular Tutorial"
+        [(ngModel)]="initialBookData.title"
+        name="title"
+      />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Category</mat-label>
-      <mat-select>
+      <mat-select name="category" [(ngModel)]="initialBookData.category">
         <mat-option
           *ngFor="let category of categories"
           [value]="category.value"
@@ -16,7 +21,11 @@
       </mat-select>
     </mat-form-field>
     <div>
-      <mat-radio-group aria-label="Select an option">
+      <mat-radio-group
+        name="is_active"
+        aria-label="Select an option"
+        [(ngModel)]="initialBookData.is_active"
+      >
         <mat-radio-button
           *ngFor="let status of statuses"
           [value]="status.value"

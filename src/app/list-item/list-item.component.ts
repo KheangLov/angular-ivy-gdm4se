@@ -8,7 +8,7 @@ import { IBook } from '../type-interface';
   styleUrls: ['./list-item.component.css'],
 })
 export class ListItemComponent implements OnInit {
-  listBooks = [];
+  listBooks: Array<IBook> = [];
 
   constructor(private bookService: BookService) {}
 

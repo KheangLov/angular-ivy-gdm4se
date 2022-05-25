@@ -9,11 +9,11 @@ export interface IStatus {
 }
 
 export interface IBook {
-  id: any;
-  title: any;
-  category: any;
-  is_active: any;
-  createdAt: any;
+  id: number;
+  title: string;
+  category: string;
+  is_active: boolean;
+  createdAt: Date;
 }
 
 export interface IBookForm {
