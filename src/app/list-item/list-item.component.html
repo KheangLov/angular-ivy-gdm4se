@@ -24,7 +24,13 @@
               >
                 Edit
               </button>
-              <button mat-raised-button color="warn">Delete</button>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="handleBookDelete(item)"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </mat-list-item>
