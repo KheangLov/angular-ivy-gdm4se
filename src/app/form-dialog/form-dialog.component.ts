@@ -13,7 +13,7 @@ import { BookService } from '../book.service';
 })
 export class FormDialogComponent {
   action: string = 'create';
-  displayedColumns = ['Title', 'Category', 'Status'];
+  displayedColumns = ['title'];
   bookFormData = this.bookFormBuilder.group({
     id: [''],
     title: ['', [Validators.required]],
