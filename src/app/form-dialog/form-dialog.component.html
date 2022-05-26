@@ -1,17 +1,15 @@
 <div mat-dialog-content>
-  <form (ngSubmit)="handleFormSubmit()">
+  <form [formGroup]="bookFormData" (ngSubmit)="handleFormSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
-      <input
-        matInput
-        placeholder="Angular Tutorial"
-        [(ngModel)]="initialBookData.title"
-        name="title"
-      />
+      <input matInput placeholder="Angular Tutorial" formControlName="title" />
+      <mat-error *ngIf="getBookFormData.title.errors?.required">
+        Please enter title
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Category</mat-label>
-      <mat-select name="category" [(ngModel)]="initialBookData.category">
+      <mat-select formControlName="category">
         <mat-option
           *ngFor="let category of categories"
           [value]="category.value"
@@ -19,12 +17,14 @@
           {{ category.viewValue }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="getBookFormData.category.errors?.required">
+        Please select category
+      </mat-error>
     </mat-form-field>
     <div>
       <mat-radio-group
-        name="is_active"
+        formControlName="is_active"
         aria-label="Select an option"
-        [(ngModel)]="initialBookData.is_active"
       >
         <mat-radio-button
           *ngFor="let status of statuses"
@@ -33,6 +33,9 @@
           {{ status.viewValue }}
         </mat-radio-button>
       </mat-radio-group>
+      <mat-error *ngIf="getBookFormData.is_active.errors?.required">
+        Please select status
+      </mat-error>
     </div>
     <button
       mat-raised-button

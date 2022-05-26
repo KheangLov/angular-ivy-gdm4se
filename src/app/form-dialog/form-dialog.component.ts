@@ -1,6 +1,7 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ICategory, IStatus, IBook } from '../type-interface';
 import { BookService } from '../book.service';
@@ -27,6 +28,7 @@ export class FormDialogComponent {
     { value: 1, viewValue: 'Active' },
   ];
   constructor(
+    private snackBar: MatSnackBar,
     public bookFormBuilder: FormBuilder,
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: IBook,
@@ -43,7 +45,16 @@ export class FormDialogComponent {
     }
   }
 
+  get getBookFormData() {
+    return this.bookFormData.controls;
+  }
+
   handleFormSubmit() {
+    if (!this.bookFormData.valid) {
+      this.snackBar.open('Please fillout all the inputs required!', 'Close');
+      return false;
+    }
+
     const actionFunction = this.action === 'edit' ? 'updateBook' : 'createBook';
     this.bookService[actionFunction](this.bookFormData.value).subscribe(
       (book) =>
