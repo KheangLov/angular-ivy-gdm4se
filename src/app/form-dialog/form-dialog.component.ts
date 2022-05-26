@@ -51,7 +51,9 @@ export class FormDialogComponent {
 
   handleFormSubmit() {
     if (!this.bookFormData.valid) {
-      this.snackBar.open('Please fillout all the inputs required!', 'Close');
+      this.snackBar.open('Please fillout all the inputs required!', 'Close', {
+        duration: 3000,
+      });
       return false;
     }
 
