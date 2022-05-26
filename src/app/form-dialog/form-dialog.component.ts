@@ -1,5 +1,6 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { ICategory, IStatus, IBook } from '../type-interface';
 import { BookService } from '../book.service';
@@ -11,11 +12,11 @@ import { BookService } from '../book.service';
 })
 export class FormDialogComponent {
   action: string = 'create';
-  initialBookData: IBook = {
-    title: null,
-    category: null,
-    is_active: null,
-  };
+  bookFormData = this.bookFormBuilder.group({
+    title: ['', [Validators.required]],
+    category: ['', [Validators.required]],
+    is_active: ['', [Validators.required]],
+  });
   categories: Array<ICategory> = [
     { value: 'Technology', viewValue: 'Technology' },
     { value: 'Cartoon', viewValue: 'Cartoon' },
@@ -26,37 +27,31 @@ export class FormDialogComponent {
     { value: 1, viewValue: 'Active' },
   ];
   constructor(
+    public bookFormBuilder: FormBuilder,
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: IBook,
     private bookService: BookService
   ) {
-    this.initialBookData = data;
+    this.bookFormData.patchValue({
+      id: data.id,
+      title: data.title,
+      category: data.category,
+      is_active: data.is_active,
+    });
     if (data && data.id) {
       this.action = 'edit';
     }
   }
 
   handleFormSubmit() {
-    if (this.action === 'edit') {
-      this.bookService
-        .updateBook(this.initialBookData)
-        .subscribe((book) =>
-          this.dialogRef.close({
-            event: 'Cancel',
-            data: book,
-            action: this.action,
-          })
-        );
-    } else {
-      this.bookService
-        .createBook(this.initialBookData)
-        .subscribe((book) =>
-          this.dialogRef.close({
-            event: 'Cancel',
-            data: book,
-            action: this.action,
-          })
-        );
-    }
+    const actionFunction = this.action === 'edit' ? 'updateBook' : 'createBook';
+    this.bookService[actionFunction](this.bookFormData.value).subscribe(
+      (book) =>
+        this.dialogRef.close({
+          event: 'Cancel',
+          data: book,
+          action: this.action,
+        })
+    );
   }
 }

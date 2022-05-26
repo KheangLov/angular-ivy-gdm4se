@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -22,7 +22,7 @@ import { HelloComponent } from './hello.component';
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatInputModule,
     MatSelectModule,

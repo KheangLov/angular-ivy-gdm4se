@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { IBook, IBookForm } from './type-interface';
+import { IBook } from './type-interface';
 
 const initialHttpOption = {
   headers: new HttpHeaders({
@@ -22,7 +22,7 @@ export class BookService {
     return this.http.get<IBook[]>(this.apiUrl);
   }
 
-  createBook(book: IBookForm): Observable<IBook> {
+  createBook(book: IBook): Observable<IBook> {
     return this.http.post<IBook>(this.apiUrl, book, initialHttpOption);
   }
 
