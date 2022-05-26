@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
+import _ from 'lodash';
 
 import { FormDialogComponent } from '../form-dialog/form-dialog.component';
 import { BookService } from '../book.service';
@@ -34,9 +35,19 @@ export class ListItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(({ data, action }) => {
       if (action === 'create') {
         data && data.is_active && this.bookList.push(data);
-      } else {
-        if (data && data.is_active < 1) {
-          this.bookList = this.bookList.filter((book) => book.id !== data.id);
+        return false;
+      }
+
+      if (data && data.id) {
+        if (data.is_active < 1) {
+          this.bookList = _.filter(
+            this.bookList,
+            (book: IBook) => book.id !== data.id
+          );
+        } else {
+          this.bookList[
+            _.findIndex(this.bookList, (book) => book.id === data.id)
+          ] = data;
         }
       }
     });
@@ -48,11 +59,11 @@ export class ListItemComponent implements OnInit {
       this.tempBookList = this.bookList;
     }
     if (title) {
-      this.bookList = this.bookList.filter((book) =>
+      this.bookList = _.filter(this.bookList, (book) =>
         book.title.includes(event.target.value)
       );
       if (!this.bookList.length) {
-        this.bookList = this.tempBookList.filter((book) =>
+        this.bookList = _.filter(this.tempBookList, (book) =>
           book.title.includes(event.target.value)
         );
       }

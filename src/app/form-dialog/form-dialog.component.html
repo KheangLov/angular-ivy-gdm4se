@@ -1,49 +1,87 @@
 <div mat-dialog-content>
-  <form [formGroup]="bookFormData" (ngSubmit)="handleFormSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
-      <input matInput placeholder="Angular Tutorial" formControlName="title" />
-      <mat-error *ngIf="getBookFormData.title.errors?.required">
-        Please enter title
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Category</mat-label>
-      <mat-select formControlName="category">
-        <mat-option
-          *ngFor="let category of categories"
-          [value]="category.value"
-        >
-          {{ category.viewValue }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="getBookFormData.category.errors?.required">
-        Please select category
-      </mat-error>
-    </mat-form-field>
-    <div>
-      <mat-radio-group
-        formControlName="is_active"
-        aria-label="Select an option"
-      >
-        <mat-radio-button
-          *ngFor="let status of statuses"
-          [value]="status.value"
-        >
-          {{ status.viewValue }}
-        </mat-radio-button>
-      </mat-radio-group>
-      <mat-error *ngIf="getBookFormData.is_active.errors?.required">
-        Please select status
-      </mat-error>
-    </div>
-    <button
-      mat-raised-button
-      color="primary"
-      style="margin-top: 15px; text-transform: capitalize;"
-      type="submit"
+  <form
+    *ngIf="action === 'multi-create'; else elseBlock"
+    [formGroup]="multiFormData"
+  >
+    <table
+      mat-table
+      [dataSource]="getBookFormArray.controls"
+      class="mat-elevation-z8 demo-table"
     >
-      {{ action }}
-    </button>
+      <!-- Name Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input
+              matInput
+              placeholder="Angular Tutorial"
+              formControlName="title"
+            />
+            <mat-error *ngIf="getBookFormData.title.errors?.required">
+              Please enter title
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </form>
+  <ng-template #elseBlock>
+    <form [formGroup]="bookFormData" (ngSubmit)="handleFormSubmit()">
+      <input type="hidden" formControlName="id" />
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          placeholder="Angular Tutorial"
+          formControlName="title"
+        />
+        <mat-error *ngIf="getBookFormData.title.errors?.required">
+          Please enter title
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option
+            *ngFor="let category of categories"
+            [value]="category.value"
+          >
+            {{ category.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="getBookFormData.category.errors?.required">
+          Please select category
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <mat-radio-group
+          formControlName="is_active"
+          aria-label="Select an option"
+        >
+          <mat-radio-button
+            *ngFor="let status of statuses"
+            [value]="status.value"
+          >
+            {{ status.viewValue }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="getBookFormData.is_active.errors?.required">
+          Please select status
+        </mat-error>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-top: 15px; text-transform: capitalize;"
+        type="submit"
+      >
+        {{ action }}
+      </button>
+    </form>
+  </ng-template>
 </div>

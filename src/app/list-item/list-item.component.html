@@ -45,6 +45,13 @@
   </div>
   <div>
     <button
+      mat-raised-button
+      color="primary"
+      (click)="openDialog({ action: 'multi-create' })"
+    >
+      Multi-Create
+    </button>
+    <button
       *ngIf="!bookData || !bookData.id; else elseBlock"
       mat-raised-button
       (click)="openDialog()"

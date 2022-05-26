@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -34,6 +35,7 @@ import { HelloComponent } from './hello.component';
     MatButtonModule,
     MatListModule,
     MatIconModule,
+    MatTableModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
     HttpClientModule,
